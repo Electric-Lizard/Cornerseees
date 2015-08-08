@@ -1,7 +1,8 @@
-package eei.cornerseees.server;
+package eei.cornerseees.server.service;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import eei.cornerseees.client.CornerseeesService;
+import eei.cornerseees.client.service.plain.CornerseeesService;
+import eei.cornerseees.server.Text;
 
 public class CornerseeesServiceImpl extends RemoteServiceServlet implements CornerseeesService {
     Text text = Text.getInstance();

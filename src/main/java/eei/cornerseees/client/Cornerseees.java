@@ -5,6 +5,10 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import eei.cornerseees.client.service.TextStream;
+import eei.cornerseees.client.service.plain.CornerseeesService;
+import eei.cornerseees.client.service.websocket.WebSocketService;
+import eei.cornerseees.shared.event.ActionHandler;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -12,11 +16,28 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public class Cornerseees implements EntryPoint {
     final TextBox textBox = new TextBox();
     RootPanel root = RootPanel.get();
+    WebSocketService webSocket = new WebSocketService();
+    TextStream textStream;
 
     /**
      * This is the entry point method.
      */
     public void onModuleLoad() {
+        establishConnection(new ActionHandler() {
+            @Override
+            public void doAction() {
+                render();
+            }
+        });
+    }
+
+    protected void establishConnection(ActionHandler onOpen) {
+        webSocket.onOpen(onOpen);
+        webSocket.establish();
+        textStream = webSocket;
+    }
+
+    protected void render() {
         final Button button = new Button("Click me");
         final Label label = new Label();
 
@@ -41,19 +62,5 @@ public class Cornerseees implements EntryPoint {
         root.add(textBox);
         root.add(button);
         root.add(label);
-    }
-
-    protected void fetchText() {
-        CornerseeesService.App.getInstance().getText(new AsyncCallback<String>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                caught.printStackTrace();
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                textBox.setText(result);
-            }
-        });
     }
 }

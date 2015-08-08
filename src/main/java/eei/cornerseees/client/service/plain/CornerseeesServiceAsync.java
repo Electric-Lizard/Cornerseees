@@ -1,4 +1,4 @@
-package eei.cornerseees.client;
+package eei.cornerseees.client.service.plain;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 

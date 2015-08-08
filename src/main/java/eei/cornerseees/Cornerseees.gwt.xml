@@ -4,13 +4,14 @@
 
     <!-- Inherit the core Web Toolkit stuff.                  -->
     <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.realityforge.gwt.websockets.WebSockets"/>
 
     <!-- Specify the app entry point class.                   -->
     <entry-point class='eei.cornerseees.client.Cornerseees'/>
 
 
     <!-- Specify the app servlets.                   -->
-    <servlet path='/CornerseeesService' class='eei.cornerseees.server.CornerseeesServiceImpl'/>
+    <servlet path='/CornerseeesService' class='eei.cornerseees.server.service.CornerseeesServiceImpl'/>
 
 
 </module>
