@@ -13,13 +13,4 @@
         <servlet-name>eei.cornerseees.Cornerseees CornerseeesService</servlet-name>
         <url-pattern>/Cornerseees/CornerseeesService</url-pattern>
     </servlet-mapping>
-
-    <servlet>
-        <servlet-name>eei.cornerseees.server.EventSource</servlet-name>
-        <servlet-class>eei.cornerseees.server.textStream</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>eei.cornerseees.server.EventSource</servlet-name>
-        <url-pattern>/Cornerseees/EventSource</url-pattern>
-    </servlet-mapping>
 </web-app>
