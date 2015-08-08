@@ -1,0 +1,16 @@
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.0//EN"
+        "http://google-web-toolkit.googlecode.com/svn/releases/2.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="Cornerseees">
+
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name="org.realityforge.gwt.websockets.WebSockets"/>
+    <inherits name="com.google.gwt.logging.Logging"/>
+
+    <!-- Specify the app entry point class.                   -->
+    <entry-point class='eei.cornerseees.client.Cornerseees'/>
+
+
+    <!-- Specify the app servlets.                   -->
+    <servlet path='/CornerseeesService' class='eei.cornerseees.server.CornerseeesServiceImpl'/>
+</module>
