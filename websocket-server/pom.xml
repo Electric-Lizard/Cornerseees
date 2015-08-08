@@ -5,20 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>eii.cornerseees</groupId>
-    <artifactId>Cornerseees</artifactId>
+    <artifactId>websocket-server</artifactId>
     <version>0.1</version>
 
     <dependencies>
-        <dependency>
-            <groupId>org.realityforge.gwt.eventsource</groupId>
-            <artifactId>gwt-eventsource</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.realityforge.gwt.websockets</groupId>
-            <artifactId>gwt-websockets</artifactId>
-            <version>1.1.2</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -28,11 +19,10 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-
 </project>
