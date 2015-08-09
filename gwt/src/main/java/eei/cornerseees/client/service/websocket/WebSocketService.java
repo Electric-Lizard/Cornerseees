@@ -1,6 +1,7 @@
 package eei.cornerseees.client.service.websocket;
 
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
 import com.google.gwt.user.client.Window;
 import eei.cornerseees.client.event.ActionHandler;
@@ -25,7 +26,7 @@ public class WebSocketService implements WebSocketListener, TextStream {
     List<TextChangeHandler> onChangeHandlers = new ArrayList<>();
 
     public void establish() {
-        String webSocketURL = "ws://127.0.0.1:8080/textStream";
+        String webSocketURL = /*"ws://127.0.0.1:8080/textStream"*/GWT.getHostPageBaseURL().replace("http", "ws") + "textStream";
         socket.setListener(this);
         socket.connect(webSocketURL);
     }

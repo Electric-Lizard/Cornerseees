@@ -8,7 +8,6 @@ import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
 import eei.cornerseees.client.service.TextStream;
 import eei.cornerseees.client.service.websocket.WebSocketService;
-import eei.cornerseees.client.view.gameField.GameFieldGrid;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>
@@ -45,11 +44,7 @@ public class Cornerseees implements EntryPoint {
 
     protected void render() {
         delegateEvents();
-        //root.add(textBox);
-
-        /***/
-        GameFieldGrid gameFieldGrid = new GameFieldGrid(10, 10);
-        root.add(gameFieldGrid);
+        root.add(textBox);
     }
 
     /**

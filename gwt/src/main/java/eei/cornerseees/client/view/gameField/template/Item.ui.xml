@@ -1,5 +1,0 @@
-<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
-    <ui:style src="css/Item.css" field="style"/>
-    <g:InlineHTML ui:field="root" addStyleNames="{style.item}"/>
-</ui:UiBinder>
