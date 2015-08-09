@@ -1,0 +1,8 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <ui:style src="css/GameFieldGrid.css" field="style"/>
+    <g:AbsolutePanel addStyleNames="{style.gameField}" ui:field="root">
+        <g:Grid ui:field="grid" addStyleNames="{style.gridTable}"/>
+    </g:AbsolutePanel>
+
+</ui:UiBinder>
