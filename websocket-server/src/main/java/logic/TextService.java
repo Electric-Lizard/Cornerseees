@@ -1,5 +1,7 @@
 package logic;
 
+import com.mongodb.MongoClient;
+import com.mongodb.client.MongoDatabase;
 import event.TextChangeHandler;
 
 import java.util.ArrayList;
@@ -9,7 +11,8 @@ import java.util.List;
  * Created by username on 8/8/15.
  */
 public class TextService {
-    List<TextChangeHandler> textChangeHandlers = new ArrayList<TextChangeHandler>();
+    protected List<TextChangeHandler> textChangeHandlers = new ArrayList<TextChangeHandler>();
+    MongoClient mongoClient = new MongoClient();
     public String getText() {
         return textData;
     }
@@ -32,7 +35,10 @@ public class TextService {
     public static TextService getInstance() {
         return instance;
     }
-    private TextService() {}
+    private TextService() {
+        MongoDatabase textDb = mongoClient.getDatabase("textService");
+//        textDb.
+    }
 
     private String textData = "<----------------------------------------------------------------SYNCED AREA------------------------------------------------------------------------------->\n" +
             "ON\n" +
