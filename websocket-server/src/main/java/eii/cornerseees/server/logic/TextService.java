@@ -1,6 +1,6 @@
-package logic;
+package eii.cornerseees.server.logic;
 
-import event.TextChangeHandler;
+import eii.cornerseees.server.event.TextChangeHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,30 +9,33 @@ import java.util.List;
  * Created by username on 8/8/15.
  */
 public class TextService {
-    List<TextChangeHandler> textChangeHandlers = new ArrayList<TextChangeHandler>();
-    public String getText() {
-        return textData;
-    }
-    public void onTextChange(TextChangeHandler textChangeHandler) {
-        this.textChangeHandlers.add(textChangeHandler);
-    }
-
-    public void setText(String text) {
-        textData = text;
-        triggerTextChange(textData);
-    }
-
-    private void triggerTextChange(String text) {
-        for (TextChangeHandler textChangeHandler : textChangeHandlers) {
-            textChangeHandler.onTextChange(text);
-        }
-    }
-
+    /*Singleton*/
     private static TextService instance = new TextService();
     public static TextService getInstance() {
         return instance;
     }
     private TextService() {}
+
+    /*Properties*/
+    protected List<TextChangeHandler> textChangeHandlers = new ArrayList<TextChangeHandler>();
+
+    /*Methods*/
+    public String getText() {
+        return textData;
+    }
+    public void setText(String text) {
+        textData = text;
+        triggerTextChange(textData);
+    }
+
+    public void addTextChangeHandler(TextChangeHandler textChangeHandler) {
+        this.textChangeHandlers.add(textChangeHandler);
+    }
+    private void triggerTextChange(String text) {
+        for (TextChangeHandler textChangeHandler : textChangeHandlers) {
+            textChangeHandler.onTextChange(text);
+        }
+    }
 
     private String textData = "<----------------------------------------------------------------SYNCED AREA------------------------------------------------------------------------------->\n" +
             "ON\n" +

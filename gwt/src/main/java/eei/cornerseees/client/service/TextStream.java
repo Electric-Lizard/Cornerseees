@@ -1,7 +1,7 @@
 package eei.cornerseees.client.service;
 
-import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
+import eei.cornerseees.shared.model.Lizard;
 
 /**
  * Created by username on 8/8/15.
@@ -9,4 +9,5 @@ import eei.cornerseees.client.event.TextChangeHandler;
 public interface TextStream {
     void save(String text);
     void onChange(TextChangeHandler textChangeHandler);
+    void sendLizard(Lizard lizard);
 }

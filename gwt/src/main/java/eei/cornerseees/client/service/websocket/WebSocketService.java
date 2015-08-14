@@ -2,9 +2,12 @@ package eei.cornerseees.client.service.websocket;
 
 
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
-import com.google.gwt.user.client.Window;
 import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
+import eei.cornerseees.shared.BaseWSRequest;
+import eei.cornerseees.shared.RequestSerializer;
+import eei.cornerseees.shared.WSRequest;
+import eei.cornerseees.shared.model.Lizard;
 import eei.cornerseees.client.service.TextStream;
 import org.realityforge.gwt.websockets.client.WebSocket;
 import org.realityforge.gwt.websockets.client.WebSocketListener;
@@ -39,6 +42,21 @@ public class WebSocketService implements WebSocketListener, TextStream {
         onChangeHandlers.add(textChangeHandler);
     }
 
+    @Override
+    public void sendLizard(Lizard lizard) {
+        /*WSRequest request = new BaseWSRequest("sendLizard", lizard);
+        sendRequest(request);*/
+        String lizardBuffer = RequestSerializer.serializeLizard(lizard);
+        socket.send(lizardBuffer);
+    }
+
+    protected void sendRequest(WSRequest request) {
+        //Window.alert(request.toString());
+        String requestBuffer = RequestSerializer.serialize(request);
+        //Window.alert(requestBuffer);
+        socket.send(requestBuffer);
+    }
+
     public void onOpen(ActionHandler onOpenHandler) {
         onOpenHandlers.add(onOpenHandler);
     }
@@ -47,6 +65,13 @@ public class WebSocketService implements WebSocketListener, TextStream {
     public void onOpen(WebSocket webSocket) {
         console.log(new LogRecord(Level.INFO, "Socket opened"));
         //Window.alert("OPENED!");
+
+        /****/
+        Lizard lizard = new Lizard();
+        lizard.color = "pink";
+        lizard.length = 14;
+        lizard.name = "Joe";
+        sendLizard(lizard);
 
         for (ActionHandler actionHandler : onOpenHandlers) {
             actionHandler.doAction();

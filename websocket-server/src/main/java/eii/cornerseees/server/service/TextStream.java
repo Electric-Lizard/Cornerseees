@@ -1,7 +1,10 @@
-package service;
+package eii.cornerseees.server.service;
 
-import event.TextChangeHandler;
-import logic.TextService;
+import com.googlecode.gwtstreamer.client.Streamer;
+import eei.cornerseees.shared.RequestSerializer;
+import eei.cornerseees.shared.WSRequest;
+import eii.cornerseees.server.event.TextChangeHandler;
+import eii.cornerseees.server.logic.TextService;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -17,7 +20,7 @@ public class TextStream {
     List<Session> sessionList = new ArrayList<Session>();
     TextService textService = TextService.getInstance();
     public TextStream() {
-        textService.onTextChange(new TextChangeHandler() {
+        textService.addTextChangeHandler(new TextChangeHandler() {
             @Override
             public void onTextChange(String text) {
                 sendText(text);
@@ -32,8 +35,8 @@ public class TextStream {
     }
 
     @OnMessage
-    public void saveText(String message, Session session) {
-        textService.setText(message);
+    public void callReference(String message, Session session) {
+        WSRequest request = RequestSerializer.deserialize(message);
     }
 
     @OnClose

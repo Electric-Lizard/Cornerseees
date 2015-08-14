@@ -7,7 +7,7 @@
 
     <servlet>
         <servlet-name>eei.cornerseees.Cornerseees CornerseeesService</servlet-name>
-        <servlet-class>eei.cornerseees.server.CornerseeesServiceImpl</servlet-class>
+        <servlet-class>eii.cornerseees.server.CornerseeesServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>eei.cornerseees.Cornerseees CornerseeesService</servlet-name>

@@ -1,4 +1,4 @@
-package event;
+package eii.cornerseees.server.event;
 
 /**
  * Created by username on 8/8/15.
