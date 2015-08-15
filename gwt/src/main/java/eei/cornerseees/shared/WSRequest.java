@@ -3,9 +3,9 @@ package eei.cornerseees.shared;
 public class WSRequest implements JSONSerializable {
     public enum RequestName {getGameField, gameField}
     protected RequestName name;
-    protected JSONSerializable data;
+    protected Object data;
 
-    public WSRequest(RequestName methodName, JSONSerializable messageData) {
+    public WSRequest(RequestName methodName, Object messageData) {
         this.name = methodName;
         this.data = messageData;
     }
@@ -20,11 +20,11 @@ public class WSRequest implements JSONSerializable {
         this.name = name;
     }
 
-    public JSONSerializable getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(JSONSerializable data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

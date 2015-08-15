@@ -1,5 +1,6 @@
 package eei.cornerseees.client;
 
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONValue;
 import eei.cornerseees.shared.JSONSerializable;
 import eei.cornerseees.shared.WSRequest;
@@ -25,5 +26,8 @@ public class RequestSerializer {
     static public <T extends JSONSerializable> T deserialize(JSONValue data, Class<T> clazz) {
         Serializer serializer = objectSerializers.get(clazz);
         return (T) serializer.deserialize(data);
+    }
+    static public JSONNumber serialize(Number number) {
+        return new JSONNumber(number.doubleValue());
     }
 }

@@ -29,10 +29,8 @@ public class CornerseeesEndPoint {
     }
 
     @OnMessage
-    public void callReference(String message, Session session) throws NoSuchMethodException, InvocationTargetException,
-            IllegalAccessException {
-        WSRequest request = RequestSerializer.deserialize(message, WSRequest.class);
-        router.handleRequest(request, session);
+    public void callReference(String message, Session session) throws Exception {
+        router.handleRequest(message, session);
     }
 
     @OnClose

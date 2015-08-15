@@ -15,7 +15,7 @@ public class WSRequestSerializer implements Serializer<WSRequest, JSONObject> {
     public JSONObject serialize(WSRequest wsRequest) {
         JSONObject wsRequestJson = new JSONObject();
         wsRequestJson.put("name", new JSONNumber(wsRequest.getName().ordinal()));
-        wsRequestJson.put("data", RequestSerializer.serialize(wsRequest.getData()));
+        wsRequestJson.put("data", RequestSerializer.serialize((Number) wsRequest.getData()));
         return wsRequestJson;
     }
 

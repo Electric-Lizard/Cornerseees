@@ -22,8 +22,13 @@ public class CornerseeesRouter {
         assignMessageHandlers();
     }
 
-    public void handleRequest(WSRequest request, Session session) {
-
+    public void handleRequest(String message, Session session) throws Exception {
+        WSRequest.RequestName requestName = RequestSerializer.getRequestName(message);
+        MessageHandler messageHandler = messageHandlers.get(requestName);
+        if (messageHandler == null) {
+            throw new Exception("Request not found");
+        }
+        messageHandler.handleMessage(message, session);
     }
 
     protected void setDependencies(CornerseeesEndPoint endPoint) {
@@ -33,11 +38,8 @@ public class CornerseeesRouter {
 
     protected void assignMessageHandlers() {
         messageHandlers = new HashMap<>();
-        messageHandlers.put(WSRequest.RequestName.getGameField, new MessageHandler() {
-            @Override
-            public void handlerMessage(String message, Session session) {
-                gameFieldService.sendGameField(session);
-            }
-        });
+
+        messageHandlers.put(WSRequest.RequestName.getGameField,
+                (encodedData, session) -> gameFieldService.sendGameField(session));
     }
 }

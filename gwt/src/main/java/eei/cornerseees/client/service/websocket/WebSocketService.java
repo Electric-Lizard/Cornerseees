@@ -57,10 +57,8 @@ public class WebSocketService implements WebSocketListener, TextStream {
     @Override
     public void onOpen(WebSocket webSocket) {
         console.log(new LogRecord(Level.INFO, "Socket opened"));
-        //Window.alert("OPENED!");
 
-        /****/
-
+        sendRequest(new WSRequest(WSRequest.RequestName.getGameField, 4321));
         for (ActionHandler actionHandler : onOpenHandlers) {
             actionHandler.doAction();
         }
