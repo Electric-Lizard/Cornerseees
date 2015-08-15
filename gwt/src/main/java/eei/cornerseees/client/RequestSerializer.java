@@ -3,8 +3,6 @@ package eei.cornerseees.client;
 import com.google.gwt.json.client.JSONValue;
 import eei.cornerseees.shared.JSONSerializable;
 import eei.cornerseees.shared.WSRequest;
-import eei.cornerseees.shared.model.Lizard;
-import eei.cornerseees.client.serializer.LizardSerializer;
 import eei.cornerseees.client.serializer.Serializer;
 import eei.cornerseees.client.serializer.WSRequestSerializer;
 
@@ -17,7 +15,6 @@ import java.util.Map;
 public class RequestSerializer {
     static protected final Map<Class, Serializer> objectSerializers = new HashMap<>();
     static {
-        objectSerializers.put(Lizard.class, new LizardSerializer());
         objectSerializers.put(WSRequest.class, new WSRequestSerializer());
     }
 

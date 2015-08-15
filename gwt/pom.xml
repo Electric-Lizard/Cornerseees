@@ -29,11 +29,6 @@
             <artifactId>gwt-dnd</artifactId>
             <version>3.3.4</version>
         </dependency>
-        <dependency>
-            <groupId>net.wetheinter</groupId>
-            <artifactId>gwt-reflect</artifactId>
-            <version>2.5.1</version>
-        </dependency>
     </dependencies>
 
     <build>

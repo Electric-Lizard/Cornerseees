@@ -8,5 +8,5 @@ import eei.cornerseees.shared.JSONSerializable;
  */
 public interface Serializer <Type extends JSONSerializable, JSONType extends JSONValue> {
     JSONType serialize(Type data);
-    Type deserialize(JSONType data) throws ClassNotFoundException;
+    Type deserialize(JSONType data);
 }

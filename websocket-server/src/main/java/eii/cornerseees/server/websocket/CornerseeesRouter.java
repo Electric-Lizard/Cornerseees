@@ -28,7 +28,7 @@ public class CornerseeesRouter {
 
     protected void setDependencies(CornerseeesEndPoint endPoint) {
         this.endPoint = endPoint;
-        gameFieldService = new GameFieldService(endPoint);
+        //gameFieldService = new GameFieldService(endPoint);
     }
 
     protected void assignMessageHandlers() {

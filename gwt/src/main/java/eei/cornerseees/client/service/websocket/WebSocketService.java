@@ -7,9 +7,10 @@ import com.google.gwt.typedarrays.shared.ArrayBuffer;
 import com.google.gwt.user.client.Window;
 import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
+import eei.cornerseees.shared.AutoBeanSerializer;
+import eei.cornerseees.shared.SimpleData;
 import eei.cornerseees.shared.WSRequest;
 import eei.cornerseees.client.RequestSerializer;
-import eei.cornerseees.shared.model.Lizard;
 import eei.cornerseees.client.service.TextStream;
 import org.realityforge.gwt.websockets.client.WebSocket;
 import org.realityforge.gwt.websockets.client.WebSocketListener;
@@ -44,12 +45,6 @@ public class WebSocketService implements WebSocketListener, TextStream {
         onChangeHandlers.add(textChangeHandler);
     }
 
-    @Override
-    public void sendLizard(Lizard lizard) {
-        WSRequest request = new WSRequest("sendLizard", lizard);
-        sendRequest(request);
-    }
-
     protected void sendRequest(WSRequest request) {
         //Window.alert(request.toString());
         String requestBuffer = RequestSerializer.serialize(request).toString();
@@ -66,13 +61,12 @@ public class WebSocketService implements WebSocketListener, TextStream {
         console.log(new LogRecord(Level.INFO, "Socket opened"));
         //Window.alert("OPENED!");
 
-        /****/
-        Lizard lizard = new Lizard();
-        lizard.setColor("pink");
-        lizard.setLength(14);
-        lizard.setName("Joe");
-        sendLizard(lizard);
+        SimpleData simpleData = AutoBeanSerializer.makeSimpleData();
+        simpleData.setData("TEST");
 
+        String temp = AutoBeanSerializer.serializeToJson(simpleData);
+        socket.send(temp);
+        /****/
         for (ActionHandler actionHandler : onOpenHandlers) {
             actionHandler.doAction();
         }
@@ -85,10 +79,6 @@ public class WebSocketService implements WebSocketListener, TextStream {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        console.log(new LogRecord(Level.INFO, text));
-        Window.alert(text);
-        JSONValue wsRequestBuffet = JSONParser.parseLenient(text);
-        WSRequest wsRequest = (WSRequest) RequestSerializer.deserialize(wsRequestBuffet);
 
         for (TextChangeHandler onChangeHandler : onChangeHandlers) {
             onChangeHandler.onTextChange(text);
