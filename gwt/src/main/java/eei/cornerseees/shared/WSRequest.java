@@ -1,17 +1,30 @@
 package eei.cornerseees.shared;
 
-import eei.cornerseees.shared.model.beans.SerializableBean;
+public class WSRequest implements JSONSerializable {
+    public enum RequestName {getGameField, gameField}
+    protected RequestName name;
+    protected JSONSerializable data;
 
+    public WSRequest(RequestName methodName, JSONSerializable messageData) {
+        this.name = methodName;
+        this.data = messageData;
+    }
 
-/**
- * Created by username on 8/11/15.
- */
-public interface WSRequest {
-    String getMethodName();
+    public WSRequest() {}
 
-    void setMethodName(String methodName);
+    public RequestName getName() {
+        return name;
+    }
 
-    SerializableBean[] getMethodParameters();
+    public void setName(RequestName name) {
+        this.name = name;
+    }
 
-    void setMethodParameters(SerializableBean[] methodParameters);
+    public JSONSerializable getData() {
+        return data;
+    }
+
+    public void setData(JSONSerializable data) {
+        this.data = data;
+    }
 }

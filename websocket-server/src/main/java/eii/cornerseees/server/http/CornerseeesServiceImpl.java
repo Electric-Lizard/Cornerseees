@@ -1,4 +1,4 @@
-package eii.cornerseees.server;
+package eii.cornerseees.server.http;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import eei.cornerseees.client.service.plain.CornerseeesService;

@@ -1,12 +1,14 @@
 package eei.cornerseees.client.service.websocket;
 
 
+import com.google.gwt.json.client.JSONParser;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
+import com.google.gwt.user.client.Window;
 import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
-import eei.cornerseees.shared.BaseWSRequest;
-import eei.cornerseees.shared.RequestSerializer;
 import eei.cornerseees.shared.WSRequest;
+import eei.cornerseees.client.RequestSerializer;
 import eei.cornerseees.shared.model.Lizard;
 import eei.cornerseees.client.service.TextStream;
 import org.realityforge.gwt.websockets.client.WebSocket;
@@ -44,15 +46,13 @@ public class WebSocketService implements WebSocketListener, TextStream {
 
     @Override
     public void sendLizard(Lizard lizard) {
-        /*WSRequest request = new BaseWSRequest("sendLizard", lizard);
-        sendRequest(request);*/
-        String lizardBuffer = RequestSerializer.serializeLizard(lizard);
-        socket.send(lizardBuffer);
+        WSRequest request = new WSRequest("sendLizard", lizard);
+        sendRequest(request);
     }
 
     protected void sendRequest(WSRequest request) {
         //Window.alert(request.toString());
-        String requestBuffer = RequestSerializer.serialize(request);
+        String requestBuffer = RequestSerializer.serialize(request).toString();
         //Window.alert(requestBuffer);
         socket.send(requestBuffer);
     }
@@ -68,9 +68,9 @@ public class WebSocketService implements WebSocketListener, TextStream {
 
         /****/
         Lizard lizard = new Lizard();
-        lizard.color = "pink";
-        lizard.length = 14;
-        lizard.name = "Joe";
+        lizard.setColor("pink");
+        lizard.setLength(14);
+        lizard.setName("Joe");
         sendLizard(lizard);
 
         for (ActionHandler actionHandler : onOpenHandlers) {
@@ -85,8 +85,10 @@ public class WebSocketService implements WebSocketListener, TextStream {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        console.log(new LogRecord(Level.INFO, "Socket message"));
-        //Window.alert(text);
+        console.log(new LogRecord(Level.INFO, text));
+        Window.alert(text);
+        JSONValue wsRequestBuffet = JSONParser.parseLenient(text);
+        WSRequest wsRequest = (WSRequest) RequestSerializer.deserialize(wsRequestBuffet);
 
         for (TextChangeHandler onChangeHandler : onChangeHandlers) {
             onChangeHandler.onTextChange(text);

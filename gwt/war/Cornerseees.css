@@ -1,0 +1,21 @@
+/** Add css rules here for your application. */
+
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+body, td, a, div, .p {
+    font-family: arial, sans-serif
+}
+textarea {
+    width: 100%;
+    height: 100%;
+}
+body {
+    width: auto;
+}
+div.dragdrop-dropTarget-engage {
+    background-color: #eee;
+}
