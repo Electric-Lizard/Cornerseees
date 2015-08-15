@@ -16,7 +16,7 @@ public class GameFieldService {
 
     public GameFieldService(CornerseeesEndPoint endPoint) {
         this.endPoint = endPoint;
-        resetGameField();
+        //resetGameField();
     }
 
     public void sendGameField(Session session) {

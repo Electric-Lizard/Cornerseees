@@ -9,7 +9,6 @@ import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
 import eei.cornerseees.shared.WSRequest;
 import eei.cornerseees.client.RequestSerializer;
-import eei.cornerseees.shared.model.Lizard;
 import eei.cornerseees.client.service.TextStream;
 import org.realityforge.gwt.websockets.client.WebSocket;
 import org.realityforge.gwt.websockets.client.WebSocketListener;
@@ -44,12 +43,6 @@ public class WebSocketService implements WebSocketListener, TextStream {
         onChangeHandlers.add(textChangeHandler);
     }
 
-    @Override
-    public void sendLizard(Lizard lizard) {
-        WSRequest request = new WSRequest("sendLizard", lizard);
-        sendRequest(request);
-    }
-
     protected void sendRequest(WSRequest request) {
         //Window.alert(request.toString());
         String requestBuffer = RequestSerializer.serialize(request).toString();
@@ -67,11 +60,6 @@ public class WebSocketService implements WebSocketListener, TextStream {
         //Window.alert("OPENED!");
 
         /****/
-        Lizard lizard = new Lizard();
-        lizard.setColor("pink");
-        lizard.setLength(14);
-        lizard.setName("Joe");
-        sendLizard(lizard);
 
         for (ActionHandler actionHandler : onOpenHandlers) {
             actionHandler.doAction();
@@ -88,7 +76,7 @@ public class WebSocketService implements WebSocketListener, TextStream {
         console.log(new LogRecord(Level.INFO, text));
         Window.alert(text);
         JSONValue wsRequestBuffet = JSONParser.parseLenient(text);
-        WSRequest wsRequest = (WSRequest) RequestSerializer.deserialize(wsRequestBuffet);
+        WSRequest wsRequest = RequestSerializer.deserialize(wsRequestBuffet, WSRequest.class);
 
         for (TextChangeHandler onChangeHandler : onChangeHandlers) {
             onChangeHandler.onTextChange(text);
