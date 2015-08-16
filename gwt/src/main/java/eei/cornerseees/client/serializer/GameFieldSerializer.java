@@ -2,25 +2,35 @@ package eei.cornerseees.client.serializer;
 
 import com.google.gwt.json.client.JSONArray;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONValue;
-import eei.cornerseees.shared.JSONSerializable;
-import eei.cornerseees.shared.gamefield.GameField;
+import eei.cornerseees.client.RequestSerializer;
+import eei.cornerseees.client.gamefield.model.GameFieldModel;
+import eei.cornerseees.client.gamefield.model.GameFieldCellModel;
 
 /**
  * Created by username on 8/15/15.
  */
-public class GameFieldSerializer implements Serializer<GameField, JSONObject> {
+public class GameFieldSerializer implements Serializer<GameFieldModel, JSONObject> {
     @Override
-    public JSONObject serialize(GameField gameField) {
+    public JSONObject serialize(GameFieldModel gameField) {
         return null;
     }
 
     @Override
-    public GameField deserialize(JSONObject gameFieldJson) {
+    public GameFieldModel deserialize(JSONObject gameFieldJson) {
         JSONArray gameFieldRowsJson = (JSONArray) gameFieldJson.get("cells");
-        for (int i = 0; i < gameFieldRowsJson.size(); i++) {
-            JSONObject gameFieldCellJson = (JSONObject) gameFieldRowsJson.get(i);
+
+        GameFieldCellModel[][] cells =
+                new GameFieldCellModel[gameFieldRowsJson.size()][((JSONArray) gameFieldRowsJson.get(0)).size()];
+
+        for (int row = 0; row < gameFieldRowsJson.size(); row++) {
+            JSONArray gameFieldCellsJson = (JSONArray) gameFieldRowsJson.get(row);
+            for (int column = 0; column < gameFieldCellsJson.size(); column++) {
+                JSONObject gameFieldCell = (JSONObject) gameFieldCellsJson.get(column);
+                GameFieldCellModel cellModel = RequestSerializer.deserialize(gameFieldCell, GameFieldCellModel.class);
+                cells[row][column] = cellModel;
+            }
         }
-        return null;
+
+        return new GameFieldModel(cells);
     }
 }

@@ -4,14 +4,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import eei.cornerseees.shared.JSONSerializable;
 import eei.cornerseees.shared.WSRequest;
+import eei.cornerseees.shared.gamefield.Piece;
+import eii.cornerseees.server.adapter.EnumAdapter;
 
 /**
  * Created by username on 8/14/15.
  */
 public class RequestSerializer {
-    static protected Gson gson = new Gson();
+    static protected Gson gson = new GsonBuilder().registerTypeAdapter(Piece.Team.class, new EnumAdapter<Piece.Team>())
+            .registerTypeAdapter(WSRequest.RequestName.class, new EnumAdapter<WSRequest.RequestName>()).create();
     static protected JsonParser parser = new JsonParser();
 
     static public String serialize(Object data) {

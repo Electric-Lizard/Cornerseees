@@ -1,12 +1,10 @@
 package eei.cornerseees.client.service.websocket;
 
 
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.typedarrays.shared.ArrayBuffer;
 import com.google.gwt.user.client.Window;
 import eei.cornerseees.client.event.ActionHandler;
-import eei.cornerseees.client.event.TextChangeHandler;
 import eei.cornerseees.shared.WSRequest;
 import eei.cornerseees.client.RequestSerializer;
 import org.realityforge.gwt.websockets.client.WebSocket;
@@ -28,7 +26,8 @@ public class CornerseeesEndpoint implements WebSocketListener {
     CornerseeesRouter router = new CornerseeesRouter(this);
 
     public void establish() {
-        String webSocketURL = "ws://127.0.0.1:8080/textStream";
+        String webSocketURL = GWT.getHostPageBaseURL().replace("http", "ws") + "textStream";
+        webSocketURL = "ws://127.0.0.1:8082/textStream";//debug
         socket.setListener(this);
         socket.connect(webSocketURL);
     }
@@ -38,9 +37,7 @@ public class CornerseeesEndpoint implements WebSocketListener {
     }
 
     protected void sendRequest(WSRequest request) {
-        //Window.alert(request.toString());
         String requestBuffer = RequestSerializer.serialize(request).toString();
-        //Window.alert(requestBuffer);
         socket.send(requestBuffer);
     }
 

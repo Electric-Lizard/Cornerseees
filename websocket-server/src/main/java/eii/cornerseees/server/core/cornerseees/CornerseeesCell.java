@@ -1,11 +1,11 @@
-package eii.cornerseees.server.core;
+package eii.cornerseees.server.core.cornerseees;
 
 import eei.cornerseees.shared.gamefield.GameFieldCell;
 
 /**
  * Created by username on 8/15/15.
  */
-public class CornerseeesCell extends GameFieldCell {
+public class CornerseeesCell implements GameFieldCell {
     CornerseeesPiece piece;
 
     public CornerseeesCell() {}

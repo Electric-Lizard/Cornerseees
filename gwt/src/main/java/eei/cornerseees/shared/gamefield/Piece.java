@@ -1,17 +1,10 @@
 package eei.cornerseees.shared.gamefield;
 
 /**
- * Created by username on 8/15/15.
+ * Created by username on 8/16/15.
  */
-public class Piece {
+public interface Piece {
+    Team getTeam();
+
     public enum Team {RED, BLUE}
-    protected Team team;
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
 }

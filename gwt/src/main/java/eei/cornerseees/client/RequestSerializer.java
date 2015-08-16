@@ -4,12 +4,14 @@ import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
-import eei.cornerseees.client.serializer.GameFieldSerializer;
-import eei.cornerseees.shared.JSONSerializable;
+import eei.cornerseees.client.serializer.*;
 import eei.cornerseees.shared.WSRequest;
-import eei.cornerseees.client.serializer.Serializer;
-import eei.cornerseees.client.serializer.WSRequestSerializer;
-import eei.cornerseees.shared.gamefield.GameField;
+import eei.cornerseees.client.gamefield.model.GameFieldModel;
+import eei.cornerseees.client.gamefield.model.GameFieldCellModel;
+import eei.cornerseees.client.gamefield.model.PieceModel;
+import eei.cornerseees.shared.gamefield.AvailableStepsCoordinates;
+import eei.cornerseees.shared.gamefield.PieceMoving;
+import eei.cornerseees.shared.gamefield.PieceTaking;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,19 +23,21 @@ public class RequestSerializer {
     static protected final Map<Class, Serializer> objectSerializers = new HashMap<>();
     static {
         objectSerializers.put(WSRequest.class, new WSRequestSerializer());
-        objectSerializers.put(GameField.class, new GameFieldSerializer());
+        objectSerializers.put(GameFieldModel.class, new GameFieldSerializer());
+        objectSerializers.put(GameFieldCellModel.class, new GameFieldCellSerializer());
+        objectSerializers.put(PieceModel.class, new PieceSerializer());
+        objectSerializers.put(PieceMoving.class, new PieceMovingSerializer());
+        objectSerializers.put(PieceTaking.class, new PieceTakingSerializer());
+        objectSerializers.put(AvailableStepsCoordinates.class, new AvailableStepsCoordinatesSerializer());
     }
 
-    static public JSONValue serialize(JSONSerializable data) {
-        return objectSerializers.get(data.getClass()).serialize(data);
+    static public JSONValue serialize(Object data) {
+        return data != null ? objectSerializers.get(data.getClass()).serialize(data) : null;
     }
 
     static public <T> T deserialize(JSONValue data, Class<T> clazz) {
         Serializer serializer = objectSerializers.get(clazz);
         return (T) serializer.deserialize(data);
-    }
-    static public JSONNumber serialize(Number number) {
-        return new JSONNumber(number.doubleValue());
     }
 
     static public WSRequest.RequestName getRequestName(String encodedRequest) {

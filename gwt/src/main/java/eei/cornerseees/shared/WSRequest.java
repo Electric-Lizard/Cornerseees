@@ -1,7 +1,7 @@
 package eei.cornerseees.shared;
 
 public class WSRequest implements JSONSerializable {
-    public enum RequestName {getGameField, gameField}
+    public enum RequestName {getGameField, gameField, movePiece, pieceTaken, availableSteps}
     protected RequestName name;
     protected Object data;
 
