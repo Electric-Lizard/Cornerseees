@@ -3,14 +3,13 @@ package eei.cornerseees.client.view.gameField;
 import com.allen_sauer.gwt.dnd.client.PickupDragController;
 import com.allen_sauer.gwt.dnd.client.drop.DropController;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.logging.client.ConsoleLogHandler;
-import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiFactory;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import eei.cornerseees.shared.gamefield.GameField;
+import eei.cornerseees.shared.gamefield.GameFieldCell;
 
 /**
  * Created by username on 8/9/15.
@@ -26,10 +25,14 @@ public class GameFieldGrid extends Composite {
     final protected int[] size;
     protected Cell[][] cellList;
     protected PickupDragController dragController;
+    protected GameField gameFieldModel;
 
-    public GameFieldGrid(int rowsCount, int columnsCount) {
-        size = new int[] {rowsCount, columnsCount};
-        cellList = new Cell[rowsCount][columnsCount];
+    public GameFieldGrid(GameField gameField) {
+        this.gameFieldModel = gameField;
+        GameFieldCell[][] gameFieldCells = gameField.getCells();
+        size = new int[] {gameFieldCells.length, gameFieldCells[0].length};
+
+        cellList = new Cell[size[0]][size[1]];
 
         initWidget(ourUiBinder.createAndBindUi(this));
         renderCell();
@@ -39,9 +42,16 @@ public class GameFieldGrid extends Composite {
         dragController = new PickupDragController(root, false);
         dragController.setBehaviorMultipleSelection(false);
 
-        for (int row = 0; row < size[0]; row++) {
-            for (int column = 0; column < size[1]; column++) {
-                Cell cell = new Cell();
+        GameFieldCell[][] gameFieldCells = gameFieldModel.getCells();
+
+        for (int row = 0; row < gameFieldCells.length; row++) {
+            for (int column = 0; column < gameFieldCells[row].length; column++) {
+                GameFieldCell cellModel = gameFieldCells[row][column];
+                Cell cell = new Cell(cellModel);
+                Item cellItem = cell.getItem();
+                if (cellItem != null) {
+                    dragController.makeDraggable(cellItem, cellItem.getRoot());
+                }
                 grid.setWidget(row, column, cell);
                 cellList[row][column] = cell;
 
@@ -50,19 +60,15 @@ public class GameFieldGrid extends Composite {
             }
         }
         style();
-
-        replaceItems(new int[][]{
-                {0,0}, {0,1}, {0,2}
-        });
     }
 
     protected void replaceItems(int[][] itemCoordinates) {
-        for (int[] itemCoordinate : itemCoordinates) {
+        /*for (int[] itemCoordinate : itemCoordinates) {
             Cell cell = cellList[itemCoordinate[0]][itemCoordinate[1]];
             Item item = new Item();
             cell.setItem(item);
             dragController.makeDraggable(item, item.getRoot());
-        }
+        }*/
     }
 
     protected void style() {

@@ -3,6 +3,8 @@ package eii.cornerseees.server.core;
 import eei.cornerseees.shared.gamefield.GameField;
 import eei.cornerseees.shared.gamefield.Piece;
 
+import java.util.Arrays;
+
 /**
  * Created by username on 8/15/15.
  */
@@ -27,10 +29,16 @@ public class CornerseeesGameField extends GameField {
         //Team blue
         for (int row = 0; row < size; row++) {
             for (int column = 0; column < size; column++) {
-                CornerseeesCell cell = cells[row][column];
+                CornerseeesCell cell = new CornerseeesCell();
+                //Team Blue
                 if (row < teamSize && column < teamSize) {
                     cell.setPiece(new CornerseeesPiece(Piece.Team.BLUE));
                 }
+                //Team Red
+                if (size - row <= teamSize && size - column <= teamSize) {
+                    cell.setPiece(new CornerseeesPiece(Piece.Team.RED));
+                }
+                cells[row][column] = cell;
             }
         }
 

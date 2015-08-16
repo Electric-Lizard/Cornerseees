@@ -9,7 +9,6 @@ import eei.cornerseees.client.event.ActionHandler;
 import eei.cornerseees.client.event.TextChangeHandler;
 import eei.cornerseees.shared.WSRequest;
 import eei.cornerseees.client.RequestSerializer;
-import eei.cornerseees.client.service.TextStream;
 import org.realityforge.gwt.websockets.client.WebSocket;
 import org.realityforge.gwt.websockets.client.WebSocketListener;
 
@@ -22,25 +21,20 @@ import java.util.logging.Logger;
 /**
  * Created by username on 8/6/15.
  */
-public class WebSocketService implements WebSocketListener, TextStream {
+public class CornerseeesEndpoint implements WebSocketListener {
     WebSocket socket = WebSocket.newWebSocketIfSupported();
     Logger console = Logger.getLogger("websocket");
     List<ActionHandler> onOpenHandlers = new ArrayList<>();
-    List<TextChangeHandler> onChangeHandlers = new ArrayList<>();
+    CornerseeesRouter router = new CornerseeesRouter(this);
 
     public void establish() {
         String webSocketURL = "ws://127.0.0.1:8080/textStream";
         socket.setListener(this);
         socket.connect(webSocketURL);
     }
-    @Override
-    public void save(String text) {
-        socket.send(text);
-    }
 
-    @Override
-    public void onChange(TextChangeHandler textChangeHandler) {
-        onChangeHandlers.add(textChangeHandler);
+    public CornerseeesRouter getRouter() {
+        return router;
     }
 
     protected void sendRequest(WSRequest request) {
@@ -50,7 +44,7 @@ public class WebSocketService implements WebSocketListener, TextStream {
         socket.send(requestBuffer);
     }
 
-    public void onOpen(ActionHandler onOpenHandler) {
+    public void addOnOpenHandler(ActionHandler onOpenHandler) {
         onOpenHandlers.add(onOpenHandler);
     }
 
@@ -58,7 +52,6 @@ public class WebSocketService implements WebSocketListener, TextStream {
     public void onOpen(WebSocket webSocket) {
         console.log(new LogRecord(Level.INFO, "Socket opened"));
 
-        sendRequest(new WSRequest(WSRequest.RequestName.getGameField, 4321));
         for (ActionHandler actionHandler : onOpenHandlers) {
             actionHandler.doAction();
         }
@@ -71,14 +64,7 @@ public class WebSocketService implements WebSocketListener, TextStream {
 
     @Override
     public void onMessage(WebSocket webSocket, String text) {
-        console.log(new LogRecord(Level.INFO, text));
-        Window.alert(text);
-        JSONValue wsRequestBuffet = JSONParser.parseLenient(text);
-        WSRequest wsRequest = RequestSerializer.deserialize(wsRequestBuffet, WSRequest.class);
-
-        for (TextChangeHandler onChangeHandler : onChangeHandlers) {
-            onChangeHandler.onTextChange(text);
-        }
+        router.handleRequest(text);
     }
 
     @Override
